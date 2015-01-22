@@ -9,7 +9,9 @@
  * Main module of the application.
  */
 angular
-  .module('agencyCloudApp', [
+
+  .module( 'agencyCloudApp' , [
+
     'ngAnimate',
     'ngAria',
     'ngCookies',
@@ -18,18 +20,35 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngTouch'
+
   ])
-  .config(function ($routeProvider) {
+
+  .config( function ( $routeProvider ) {
+
     $routeProvider
-      .when('/', {
-        templateUrl: 'views/main.html',
-        controller: 'MainCtrl'
+
+      .when( '/' , {
+
+        templateUrl : 'views/main.html',
+
+        controller : 'MainController',
+
+        reloadOnSearch : false
+
       })
-      .when('/about', {
+
+      .when( '/about' , {
+
         templateUrl: 'views/about.html',
+
         controller: 'AboutCtrl'
+
       })
+
       .otherwise({
+
         redirectTo: '/'
+
       });
+
   });

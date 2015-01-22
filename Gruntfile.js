@@ -395,10 +395,10 @@ module.exports = function (grunt) {
 
       options: {
 
-        accessKeyId: "<%= aws.accessKeyId %>",
-        secretAccessKey: "<%= aws.secretAccessKey %>",
-        bucket: "agencycloud.io",
-        region: "us-west-1",
+        accessKeyId: '<%= aws.accessKeyId %>',
+        secretAccessKey: '<%= aws.secretAccessKey %>',
+        bucket: 'agencycloud.io',
+        region: 'us-west-1',
         headers: {
 
           CacheControl: 60

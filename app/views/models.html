@@ -1,0 +1,43 @@
+<aside class="col-sm-4 col-lg-3">
+
+  <header class="navbar">
+
+    <div class="container-fluid">
+
+      <button class="pull-left btn btn-link navbar-btn">
+
+        <span class="glyphicon glyphicon-chevron-left"></span>
+
+      </button>
+
+      <p class="navbar-text">
+
+        Models
+
+      </p>
+
+      <button class="pull-right btn btn-link navbar-btn">
+
+        <span class="glyphicon glyphicon-plus"></span>
+
+      </button>
+
+    </div>
+
+  </header>
+
+  <div class="panel panel-default">
+
+    <nav class="list-group">
+
+      <a class="list-group-item" ng-href="#/?model={{ model.url }}" ng-repeat="model in data.models">
+
+        {{ model.name }}
+
+      </a>
+
+    </nav>
+
+  </div>
+
+</aside>
