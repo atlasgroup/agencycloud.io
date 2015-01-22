@@ -1,0 +1,766 @@
+<div class="row" ng-class="{ ready : ready }">
+
+  <div id="nav" class="col-lg-2 visible-lg-block">
+
+    <ul id="nav-header" class="nav nav-pills nav-stacked text-center">
+
+      <li>
+
+        <a>
+
+          <canvas></canvas>
+
+          <script>
+
+            ( function() {
+
+              var scene = new THREE.Scene();
+              var camera = new THREE.PerspectiveCamera( 75 , 110 / 110 , 0.1 , 1000 );
+
+              var renderer = new THREE.WebGLRenderer( { alpha : true } );
+              renderer.setSize( 110 , 110 );
+              document.getElementsByTagName( 'canvas' )[ 0 ].parentNode.replaceChild( renderer.domElement , document.getElementsByTagName( 'canvas' )[ 0 ] );
+
+              var geometry = new THREE.TetrahedronGeometry();
+              var material = new THREE.MeshBasicMaterial( { color : 0x000000 , wireframe : true } );
+              var cube = new THREE.Mesh( geometry, material );
+              scene.add( cube );
+
+              camera.position.z = 5;
+
+              var render = function () {
+
+                requestAnimationFrame( render );
+
+                cube.rotation.x += 0.01;
+                cube.rotation.y += 0.01;
+
+                renderer.render( scene , camera );
+
+              };
+
+              render();
+
+            })();
+
+          </script>
+
+        </a>
+
+      </li>
+
+      <li>
+
+        <a href="#">
+
+          Dashboard
+
+        </a>
+
+      </li>
+
+      <li>
+
+        <a href="#">
+
+          Calendar <span class="badge">4</span>
+
+        </a>
+
+      </li>
+
+      <li>
+
+        <a href="#">
+
+          Projects <span class="badge">7</span>
+
+        </a>
+
+      </li>
+
+      <li>
+
+        <a href="#">
+
+          Packages <span class="badge">3</span>
+
+        </a>
+
+      </li>
+
+      <li>
+
+        <a href="#">
+
+          Opportunuties <span class="badge">14</span>
+
+        </a>
+
+      </li>
+
+      <li>
+
+        <a href="#">
+
+          Leads <span class="badge">28</span>
+
+        </a>
+
+      </li>
+
+      <li class="active">
+
+        <a href="#">
+
+          Models <span class="badge">2</span>
+
+        </a>
+
+      </li>
+
+      <li>
+
+        <a href="#">
+
+          Companies
+
+        </a>
+
+      </li>
+
+      <li>
+
+        <a href="#">
+
+          Contacts
+
+        </a>
+
+      </li>
+
+      <li>
+
+        <a href="#">
+
+          Settings
+
+        </a>
+
+      </li>
+
+      <li>
+
+        <a href="#">
+
+          Help
+
+        </a>
+
+      </li>
+
+    </ul>
+
+  </div>
+
+  <div id="aside" class="col-md-4 col-lg-3">
+
+    <nav id="aside-header" class="navbar navbar-default navbar-white">
+
+      <div class="container-fluid">
+
+        <div class="navbar-header pull-left">
+
+          <button type="button" class="btn btn-link navbar-btn">
+
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+
+          </button>
+
+        </div>
+
+        <h5 class="navbar-text navbar-center">
+
+          Models
+
+        </h5>
+
+        <div class="navbar-header pull-right">
+
+          <button type="button" class="btn btn-link navbar-btn" ng-click="models.create()">
+
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+
+          </button>
+
+        </div>
+
+      </div>
+
+    </nav>
+
+    <div id="aside-nav" class="panel panel-default">
+
+      <div class="panel-heading">
+
+        <form>
+
+          <div class="input-group">
+
+            <input type="search" class="form-control" placeholder="Search" ng-model="search">
+
+            <span class="input-group-btn">
+
+              <button class="btn btn-default" type="submit">
+
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+
+              </button>
+
+            </span>
+
+          </div>
+
+        </form>
+
+      </div>
+
+      <nav class="list-group">
+
+        <a ng-href="#/app?model={{ model.url }}" class="list-group-item" ng-class="{ active : models.active( model ) }" ng-click="models.set( model )" ng-repeat="model in data.models | filter : search">
+
+          <div class="row">
+
+            <div class="col-xs-1">
+
+              <span class="glyphicon glyphicon-eye-open small" data-container="body" data-toggle="tooltip" data-placement="left" title="{{ viewer( model ) }} is viewing this model" ng-if="viewing( model )"></span>
+
+              <span class="glyphicon glyphicon-asterisk small" ng-if="$index === 1 || $index === 2"></span>
+
+              <span class="glyphicon glyphicon-flag small" ng-if="$index === 6"></span>
+
+              <span class="glyphicon glyphicon-lock small" ng-if="$index === 3"></span>
+
+              <span class="glyphicon glyphicon-pencil small" ng-if="$index === 0"></span>
+
+            </div>
+
+            <div class="col-xs-9">
+
+              <h5 class="list-group-item-heading">
+
+                {{ model.name || 'New Model' }}
+
+              </h5>
+
+              <p class="list-group-item-text text-muted">
+
+                {{ model.height || 'Height' }}
+
+                {{ model.bust || 'Bust' }}
+
+                {{ model.waist || 'Waist' }}
+
+                {{ model.hip || 'Hip' }}
+
+                {{ model.dress || 'Dress' }}
+
+                {{ model.shoe || 'Shoe' }}
+
+                {{ model.hair || 'Hair' }}
+
+                {{ model.eyes || 'Eyes' }}
+
+              </p>
+
+            </div>
+
+            <div class="col-xs-1">
+
+              <h5 class="list-group-item-heading">»</h5>
+
+            </div>
+
+          </div>
+
+        </a>
+
+      </nav>
+
+    </div>
+
+  </div>
+
+  <div id="main" class="col-md-8 col-lg-7" ng-if="model">
+
+    <form name="form" class="form-horizontal" ng-submit="submit( data )">
+
+      <nav id="main-header" class="navbar navbar-default navbar-white">
+
+        <div class="container-fluid">
+
+          <div class="navbar-header pull-left">
+
+            <button type="button" class="btn btn-link navbar-btn">
+
+              <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+
+            </button>
+
+          </div>
+
+          <h5 class="navbar-text navbar-center">
+
+            {{ model.name }}
+
+          </h5>
+
+          <div class="navbar-header pull-right">
+
+            <button type="submit" class="btn btn-success navbar-btn" ng-disabled="form.$invalid">
+
+              <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+
+            </button>
+
+          </div>
+
+        </div>
+
+      </nav>
+
+      <div id="main-form" class="panel-group">
+
+        <div class="panel panel-default">
+
+          <div class="panel-body">
+
+            <div class="row">
+
+              <label for="model-image" class="col-xs-offset-1 col-xs-2 text-right">
+
+                <img class="img-responsive img-rounded" ng-src="{{ model.image | small }}" ng-if="model.image">
+
+              </label>
+
+              <div class="col-xs-8">
+
+                <div class="form-group input-group hidden">
+
+                  <input type="file" id="model-image" accept="image/jpeg" class="form-control" image="model.image" resize-max-height="240" resize-max-width="240" resize-quality="1">
+
+                  <span class="input-group-btn">
+
+                    <label class="btn btn-default">
+
+                      Image
+
+                    </label>
+
+                  </span>
+
+                </div>
+
+                <div class="row">
+
+                  <div class="col-xs-6">
+
+                    <div class="form-group input-group">
+
+                      <input required type="text" class="form-control" placeholder="Name" ng-model="model.name">
+
+                      <span class="input-group-btn">
+
+                        <label class="btn btn-default">
+
+                          Name
+
+                        </label>
+
+                      </span>
+
+                    </div>
+
+                  </div>
+
+                  <div class="col-xs-6">
+
+                    <div class="form-group input-group">
+
+                      <input required type="text" class="form-control" placeholder="Url" ng-model="model.url">
+
+                      <span class="input-group-btn">
+
+                        <label class="btn btn-default">
+
+                          Url
+
+                        </label>
+
+                      </span>
+
+                    </div>
+
+                  </div>
+
+                </div>
+
+                <div class="row">
+
+                  <div class="col-xs-6">
+
+                    <div class="form-group input-group">
+
+                      <input type="text" class="form-control" placeholder="Height" ng-model="model.height">
+
+                      <span class="input-group-btn">
+
+                        <label class="btn btn-default">
+
+                          Height
+
+                        </label>
+
+                      </span>
+
+                    </div>
+
+                  </div>
+
+                  <div class="col-xs-6">
+
+                    <div class="form-group input-group">
+
+                      <input type="text" class="form-control" placeholder="Bust" ng-model="model.bust">
+
+                      <span class="input-group-btn">
+
+                        <label class="btn btn-default">
+
+                          Bust
+
+                        </label>
+
+                      </span>
+
+                    </div>
+
+                  </div>
+
+                </div>
+
+                <div class="row">
+
+                  <div class="col-xs-6">
+
+                    <div class="form-group input-group">
+
+                      <input type="text" class="form-control" placeholder="Waist" ng-model="model.waist">
+
+                      <span class="input-group-btn">
+
+                        <label class="btn btn-default">
+
+                          Waist
+
+                        </label>
+
+                      </span>
+
+                    </div>
+
+                  </div>
+
+                  <div class="col-xs-6">
+
+                    <div class="form-group input-group">
+
+                      <input type="text" class="form-control" placeholder="Hip" ng-model="model.hip">
+
+                      <span class="input-group-btn">
+
+                        <label class="btn btn-default">
+
+                          Hip
+
+                        </label>
+
+                      </span>
+
+                    </div>
+
+                  </div>
+
+                </div>
+
+                <div class="row">
+
+                  <div class="col-xs-6">
+
+                    <div class="form-group input-group">
+
+                      <input type="text" class="form-control" placeholder="Dress" ng-model="model.dress">
+
+                      <span class="input-group-btn">
+
+                        <label class="btn btn-default">
+
+                          Dress
+
+                        </label>
+
+                      </span>
+
+                    </div>
+
+                  </div>
+
+                  <div class="col-xs-6">
+
+                    <div class="form-group input-group">
+
+                      <input type="text" class="form-control" placeholder="Shoe" ng-model="model.shoe">
+
+                      <span class="input-group-btn">
+
+                        <label class="btn btn-default">
+
+                          Shoe
+
+                        </label>
+
+                      </span>
+
+                    </div>
+
+                  </div>
+
+                </div>
+
+                <div class="row">
+
+                  <div class="col-xs-6">
+
+                    <div class="form-group input-group">
+
+                      <input type="text" class="form-control" placeholder="Hair" ng-model="model.hair">
+
+                      <span class="input-group-btn">
+
+                        <label class="btn btn-default">
+
+                          Hair
+
+                        </label>
+
+                      </span>
+
+                    </div>
+
+                  </div>
+
+                  <div class="col-xs-6">
+
+                    <div class="form-group input-group">
+
+                      <input type="text" class="form-control" placeholder="Eye" ng-model="model.eye">
+
+                      <span class="input-group-btn">
+
+                        <label class="btn btn-default">
+
+                          Eye
+
+                        </label>
+
+                      </span>
+
+                    </div>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+            <div class="row">
+
+              <div class="col-xs-offset-1 col-xs-2 text-right">
+
+                <h4>
+
+                  Albums
+
+                </h4>
+
+              </div>
+
+            </div>
+
+            <div class="row" ng-repeat="album in model.albums">
+
+              <div class="col-xs-offset-1 col-xs-2 text-right">
+
+                <h5>
+
+                  {{ album.name }}
+
+                </h5>
+
+              </div>
+
+              <div class="col-xs-8">
+
+                <div class="row">
+
+                  <div class="col-xs-6">
+
+                    <div class="form-group input-group">
+
+                  <input required type="text" class="form-control" placeholder="Album name" ng-model="album.name">
+
+                  <span class="input-group-btn">
+
+                    <label class="btn btn-default">
+
+                      Name
+
+                    </label>
+
+                  </span>
+
+                </div>
+
+                  </div>
+
+                  <div class="col-xs-6">
+
+                    <div class="form-group input-group">
+
+                  <input required type="text" class="form-control" placeholder="Album url" ng-model="album.url">
+
+                  <span class="input-group-btn">
+
+                    <label class="btn btn-default">
+
+                      Url
+
+                    </label>
+
+                  </span>
+
+                </div>
+
+                  </div>
+
+                </div>
+
+                <div class="form-group">
+
+                  <div class="panel panel-default">
+
+                    <div class="panel-body">
+
+                      <div class="square" ng-repeat="image in album.images" sort album="album" index="{{ $index }}">
+
+                        <img ng-src="{{ image | small }}">
+
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                </div>
+
+                <div class="form-group">
+
+                  <div class="btn-group-vertical btn-block">
+
+                    <label class="btn btn-default" ng-disabled="form.$invalid">
+
+                      <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+
+                      Images
+
+                      <input type="file" accept="image/jpeg" multiple class="hidden" images="album.images" resize-max-height="240" resize-max-width="240" resize-quality="1">
+
+                    </label>
+
+                    <button type="button" class="btn btn-danger" ng-click="models.albums.delete( album )" ng-disabled="form.$invalid">
+
+                      <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+
+                      Delete Album
+
+                    </button>
+
+                  </div>
+
+                </div>
+
+                <hr>
+
+              </div>
+
+            </div>
+
+            <div class="row">
+
+              <div class="col-xs-offset-3 col-xs-8">
+
+                <div class="form-group">
+
+                  <div class="btn-group-vertical btn-block">
+
+                    <button type="button" class="btn btn-default">
+
+                      <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+
+                      Note
+
+                    </button>
+
+                    <button type="button" class="btn btn-default" ng-click="models.albums.create()">
+
+                      <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+
+                      Album
+
+                    </button>
+
+                  </div>
+
+                </div>
+
+                <hr>
+
+                <div class="form-group">
+
+                  <button type="button" class="btn btn-danger btn-block" ng-click="models.delete( model )">
+
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+
+                    Delete Model
+
+                  </button>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </form>
+
+  </div>
+
+</div>

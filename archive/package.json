@@ -1,0 +1,11 @@
+{
+  "name": "agencycloud.io",
+  "version": "0.0.0",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-aws": "^0.4.0"
+  },
+  "dependencies": {
+    "jsonwebtoken": "^3.2.2"
+  }
+}
