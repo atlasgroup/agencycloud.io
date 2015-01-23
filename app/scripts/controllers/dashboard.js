@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc function
- * @name agencyCloudApp.controller:AboutCtrl
+ * @name agencyCloudApp.controller:DashboardCtrl
  * @description
- * # AboutCtrl
+ * # DashboardCtrl
  * Controller of the agencyCloudApp
  */
 angular.module('agencyCloudApp')
-  .controller('AboutCtrl', function ($scope) {
+  .controller('DashboardCtrl', function ($scope) {
     $scope.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',

@@ -17,13 +17,9 @@ angular
 
       templateUrl : 'views/navigation.html',
 
-      restrict: 'E',
+      replace : true,
 
-      link: function postLink( scope , element , attrs ) {
-
-        /*element.text('this is the navigation directive');*/
-
-      }
+      restrict: 'E'
 
     };
 

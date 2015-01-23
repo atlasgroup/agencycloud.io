@@ -1,6 +1,17 @@
 <aside class="col-sm-4 col-lg-3">
 
-  <header class="navbar">
+  <style>
+
+    aside {
+
+      overflow-y: scroll;
+      height: 100%;
+
+    }
+
+  </style>
+
+  <header class="navbar navbar-sticky panel">
 
     <div class="container-fluid">
 
@@ -28,11 +39,41 @@
 
   <div class="panel panel-default">
 
+    <search>
+
+      <!-- This gets replaced by the search directive -->
+
+    </search>
+
     <nav class="list-group">
 
-      <a class="list-group-item" ng-href="#/?model={{ model.url }}" ng-repeat="model in data.models">
+      <a class="list-group-item" ui-sref-active="active" ui-sref="models.model({ model : model.url })" ng-repeat="model in data.models | filter : search">
 
-        {{ model.name }}
+        <div class="list-group-item-heading">
+
+          {{ model.name }}
+
+        </div>
+
+        <div class="list-group-item-text">
+
+          Height {{ model.height }}
+
+          Bust {{ model.bust }}
+
+          Waist {{ model.waist }}
+
+          Hip {{ model.hip }}
+
+          Dress {{ model.dress }}
+
+          Shoe {{ model.shoe }}
+
+          Hair {{ model.hair }}
+
+          Eyes {{ model.eyes }}
+
+        </div>
 
       </a>
 
@@ -41,3 +82,9 @@
   </div>
 
 </aside>
+
+<main class="col-sm-12 col-md-8 col-lg-7" ui-view>
+
+  <!-- Model goes here -->
+
+</main>

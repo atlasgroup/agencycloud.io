@@ -1,10 +1,20 @@
 <nav class="col-sm-4 col-lg-2">
 
-  <ul class="nav nav-pills nav-justified">
+  <header class="navbar">
 
-    <li>
+    <logo class="img-responsive">
 
-      <a ng-repeat="link in nav" href="#/?{{ link }}">
+      <!-- Tetrahedron -->
+
+    </logo>
+
+  </header>
+
+  <ul class="nav nav-pills nav-stacked text-center">
+
+    <li ui-sref-active="active" ng-repeat="link in navigation.links">
+
+      <a ui-sref="{{ link }}">
 
         {{ link }}
 

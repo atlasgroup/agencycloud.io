@@ -8,47 +8,50 @@
  *
  * Main module of the application.
  */
+
 angular
 
   .module( 'agencyCloudApp' , [
 
-    'ngAnimate',
-    'ngAria',
-    'ngCookies',
-    'ngMessages',
-    'ngResource',
-    'ngRoute',
-    'ngSanitize',
+    'ui.router',
     'ngTouch'
 
   ])
 
-  .config( function ( $routeProvider ) {
+  .config( function ( $stateProvider , $urlRouterProvider ) {
 
-    $routeProvider
+    $stateProvider
 
-      .when( '/' , {
+      .state( 'dashboard' , {
 
-        templateUrl : 'views/main.html',
+        templateUrl : 'views/dashboard.html',
 
-        controller : 'MainController',
-
-        reloadOnSearch : false
+        url : '/dashboard'
 
       })
 
-      .when( '/about' , {
+      .state( 'models' , {
 
-        templateUrl: 'views/about.html',
+        templateUrl : 'views/models.html',
 
-        controller: 'AboutCtrl'
+        controller : 'ModelsController',
+
+        url : '/models'
 
       })
 
-      .otherwise({
+      .state( 'models.model' , {
 
-        redirectTo: '/'
+        templateUrl : 'views/model.html',
+
+        controller : 'ModelController',
+
+        url : '/:model'
 
       });
+
+    $urlRouterProvider
+
+      .otherwise( '/models' );
 
   });

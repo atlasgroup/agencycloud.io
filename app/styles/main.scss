@@ -1,9 +1,7 @@
 $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
 
 // bower:scss
-
 @import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
-
 // endbower
 
 .browsehappy {
@@ -15,3 +13,35 @@ $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/boots
 
 }
 
+html,
+body,
+body > .container-fluid,
+body > .container-fluid > .row,
+body > .container-fluid > .row > div {
+
+  height: 100%
+
+}
+
+body {
+
+  background: #f7f7f7;
+
+}
+
+header {
+
+  margin-top: 20px;
+
+}
+
+.navbar-sticky {
+
+  /*border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;*/
+  position: -webkit-sticky;
+  position: sticky;
+  z-index: 3;
+  top: 0;
+
+}

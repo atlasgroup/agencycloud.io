@@ -11,9 +11,11 @@
     "angular-cookies": "^1.3.0",
     "angular-messages": "^1.3.0",
     "angular-resource": "^1.3.0",
-    "angular-route": "^1.3.0",
     "angular-sanitize": "^1.3.0",
-    "angular-touch": "^1.3.0"
+    "angular-touch": "^1.3.0",
+    "angular-ui-router": "~0.2.13",
+    "socket.io-client": "~1.3.2",
+    "three.js": "*"
   },
   "devDependencies": {
     "angular-mocks": "~1.3.0",

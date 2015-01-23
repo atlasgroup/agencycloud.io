@@ -1,39 +1,71 @@
-<main class="col-sm-12 col-md-8 col-lg-7">
+<style>
 
-  <header class="navbar">
+  main {
 
-    <div class="container-fluid">
+    overflow-y: scroll;
+    display: block;
+    height: 100%;
 
-      <button class="navbar-header pull-left btn btn-link navbar-btn">
+  }
 
-        <span class="glyphicon glyphicon-chevron-left"></span>
+</style>
 
-      </button>
+<header class="navbar navbar-sticky panel">
 
-      <p class="navbar-header navbar-text">
+  <div class="container-fluid">
 
-        Model
+    <button class="navbar-header pull-left btn btn-link navbar-btn">
 
-      </p>
+      <span class="glyphicon glyphicon-chevron-left"></span>
 
-      <button class="navbar-header pull-right btn btn-link navbar-btn">
+    </button>
 
-        <span class="glyphicon glyphicon-ok"></span>
+    <p class="navbar-header navbar-text">
 
-      </button>
+      {{ model.name }}
 
-    </div>
+    </p>
 
-  </header>
+    <button class="navbar-header pull-right btn btn-link navbar-btn" ng-disabled="form.$invalid">
 
-  <div class="panel panel-default">
+      <span class="glyphicon glyphicon-ok"></span>
 
-    <form>
-
-      MAIN
-
-    </form>
+    </button>
 
   </div>
 
-</main>
+</header>
+
+<div class="panel panel-default">
+
+  <form class="panel-body" name="form">
+
+    <div class="form-group">
+
+      <label>
+
+        Name
+
+      </label>
+
+      <input required class="form-control" ng-model="model.name">
+
+    </div>
+
+    <div class="form-group">
+
+      <label>
+
+        Url
+
+      </label>
+
+      <input required class="form-control" ng-model="model.url">
+
+    </div>
+
+    {{ model | json }}
+
+  </form>
+
+</div>
