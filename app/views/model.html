@@ -10,62 +10,200 @@
 
 </style>
 
-<header class="navbar navbar-sticky panel">
+<form name="form" ng-submit="submit()">
 
-  <div class="container-fluid">
+  <header class="navbar navbar-sticky panel card">
 
-    <button class="navbar-header pull-left btn btn-link navbar-btn">
+    <div class="container-fluid">
 
-      <span class="glyphicon glyphicon-chevron-left"></span>
+      <button class="navbar-header pull-left btn btn-link navbar-btn">
 
-    </button>
+        <span class="glyphicon glyphicon-chevron-left"></span>
 
-    <p class="navbar-header navbar-text">
+      </button>
 
-      {{ model.name }}
+      <p class="navbar-text navbar-center">
 
-    </p>
+        {{ model.name }}
 
-    <button class="navbar-header pull-right btn btn-link navbar-btn" ng-disabled="form.$invalid">
+      </p>
 
-      <span class="glyphicon glyphicon-ok"></span>
+      <button type="submit" class="navbar-header pull-right btn btn-link navbar-btn" ng-disabled="form.$invalid">
 
-    </button>
+        <span class="glyphicon glyphicon-ok"></span>
+
+      </button>
+
+    </div>
+
+  </header>
+
+  <div class="panel panel-default card">
+
+    <div class="panel-body">
+
+      <div class="media form-group">
+
+        <div class="media-left">
+
+          <img class="media-object img-rounded" ng-src="{{ model.image | image : '272' }}" ng-srcset="{{ model.image | image : '272' }} 2x">
+
+        </div>
+
+        <div class="media-body">
+
+          <label class="media-heading">
+
+            Image
+
+          </label>
+
+          <input type="file" class="form-control">
+
+          <p class="help-block">
+
+            <small>
+
+              Available sizes :
+
+              <a ng-href="{{ model.image | image : size }}" ng-repeat="size in model.image.sizes track by $index">
+
+                {{ size }}px
+
+              </a>
+
+            </small>
+
+          </p>
+
+        </div>
+
+      </div>
+
+      <div class="form-group">
+
+        <label>
+
+          Name
+
+        </label>
+
+        <input required class="form-control" ng-change="update( model )" ng-model="model.name">
+
+      </div>
+
+      <div class="form-group">
+
+        <label>
+
+          Url
+
+        </label>
+
+        <input required class="form-control" ng-change="update( model )" ng-model="model.url">
+
+      </div>
+
+      <div class="form-group">
+
+        <label>
+
+          Height
+
+        </label>
+
+        <input class="form-control" ng-change="update( model )" ng-model="model.height">
+
+      </div>
+
+      <hr>
+
+      <div class="form-group">
+
+        <label>
+
+          Notes
+
+        </label>
+
+        <button class="btn btn-default btn-block" ng-click="notes.create( model )">
+
+          <span class="glyphicon glyphicon-plus"></span> Note
+
+        </button>
+
+      </div>
+
+      <div class="form-group" ng-repeat="note in model.notes">
+
+        <textarea class="form-control" placeholder="Enter a note here…" ng-change="notes.update( note , model )" ng-model="note.text"></textarea>
+
+        <p class="help-block text-center">
+
+          <small>
+
+            Updated on {{ note.updated.on | date : 'fullDate' }} at {{ note.updated.on | date : 'mediumTime' }} by {{ note.updated.by }} Created on {{ note.created.on | date : 'fullDate' }} at {{ note.created.on | date : 'mediumTime' }} by  {{ note.created.by }}
+
+          </small>
+
+        </p>
+
+        <button type="button" class="btn btn-link btn-block" ng-click="notes.remove( note , model )">
+
+          Remove
+
+        </button>
+
+      </div>
+
+      <hr>
+
+      <div class="form-group">
+
+        <label class="btn btn-default btn-block">
+
+          <span ng-if="!model.published">
+
+            <span class="glyphicon glyphicon-eye-open"></span> Publish
+
+          </span>
+
+          <span ng-if="model.published">
+
+            <span class="glyphicon glyphicon-eye-close"></span> Archive
+
+          </span>
+
+          <input type="checkbox" class="hidden" ng-change="update( model )" ng-model="model.published">
+
+        </label>
+
+        <p class="help-block text-center">
+
+          <small>
+
+            Updated on {{ model.updated.on | date : 'fullDate' }} at {{ model.updated.on | date : 'mediumTime' }} by {{ model.updated.by }} Created on {{ model.created.on | date : 'fullDate' }} at {{ model.created.on | date : 'mediumTime' }} by  {{ model.created.by }}
+
+          </small>
+
+        </p>
+
+      </div>
+
+      <div class="form-group">
+
+        <button type="button" class="btn btn-link btn-block" ng-click="remove( model )">
+
+          Remove
+
+        </button>
+
+      </div>
+
+    </div>
 
   </div>
 
-</header>
+</form>
 
-<div class="panel panel-default">
-
-  <form class="panel-body" name="form">
-
-    <div class="form-group">
-
-      <label>
-
-        Name
-
-      </label>
-
-      <input required class="form-control" ng-model="model.name">
-
-    </div>
-
-    <div class="form-group">
-
-      <label>
-
-        Url
-
-      </label>
-
-      <input required class="form-control" ng-model="model.url">
-
-    </div>
-
-    {{ model | json }}
-
-  </form>
-
-</div>
+<small>{{ model | json }}</small>

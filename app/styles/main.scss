@@ -37,11 +37,34 @@ header {
 
 .navbar-sticky {
 
-  /*border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;*/
   position: -webkit-sticky;
   position: sticky;
   z-index: 3;
   top: 0;
+
+}
+
+.navbar-center {
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  position: absolute;
+  text-align: center;
+  overflow: hidden;
+  right: 70px;
+  left: 70px;
+
+}
+
+.card {
+
+  box-shadow: 0 1px 1px rgba( 0 , 0 , 0 , 0.3 );
+  border: 0;
+
+}
+
+.img-retina {
+
+  width: 50%;
 
 }

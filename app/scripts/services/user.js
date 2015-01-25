@@ -2,9 +2,9 @@
 
 /**
  * @ngdoc service
- * @name agencyCloudApp.progress
+ * @name agencyCloudApp.User
  * @description
- * # progress
+ * # User
  * Service in the agencyCloudApp.
  */
 
@@ -12,11 +12,11 @@ angular
 
   .module( 'agencyCloudApp' )
 
-  .factory( 'Progress' , function () {
+  .service( 'User' , function () {
 
     return {
 
-      progress : 0
+      name : 'Admi N.'
 
     };
 

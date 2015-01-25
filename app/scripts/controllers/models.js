@@ -12,32 +12,80 @@ angular
 
   .module( 'agencyCloudApp' )
 
-  .controller( 'ModelsController' , function ( $scope , $state , $stateParams , Data , Progress ) {
+  .controller( 'ModelsController' , function ( $scope , $window , $state , $stateParams , Data , User , socket ) {
 
-    Progress.progress = 30;
+    socket.on( 'model:image:sizes:put' , function( image ) {
+
+      for( var index = 0; index < $scope.data.models.length; index++ ) {
+
+        if( $scope.data.models[ index ].url === image.model ) {
+
+          if( $scope.data.models[ index ].image.sizes ) {
+
+            $scope.data.models[ index ].image.sizes.push( image.size );
+
+          } else {
+
+            $scope.data.models[ index ].image.sizes = [ image.size ];
+
+          }
+
+        }
+
+      }
+
+    });
 
     Data.get().then( function( response ) {
 
-      Progress.progress = 90;
-
       $scope.data = response;
 
-      if( $stateParams.model ) {
+      if( !$stateParams.model ) {
 
-        $scope.model = $scope.data.models.filter( function( model ) {
-
-          return model.url === $stateParams.model;
-
-        })[ 0 ];
-
-      } else {
+        /* No model is set, show the first one in the list */
 
         $state.go( 'models.model' , { model : $scope.data.models[ 0 ].url } );
 
       }
 
-      Progress.progress = 100;
-
     });
+
+    $scope.create = function() {
+
+      /* Create a new model */
+
+      var model = {
+
+        name : 'New model',
+
+        url : 'new-model',
+
+        created : {
+
+          on : Date.now(),
+
+          by : User.name
+
+        },
+
+        updated : {
+
+          on : Date.now(),
+
+          by : User.name
+
+        }
+
+      };
+
+      /* Add a new model to the list */
+
+      $scope.data.models.unshift( model );
+
+      /* Go to the new model */
+
+      $state.go( 'models.model' , { model : 'new-model' } );
+
+    };
 
   });
