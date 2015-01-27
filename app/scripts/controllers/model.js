@@ -1,5 +1,7 @@
 'use strict';
 
+/*jshint -W109 */
+
 /**
  * @ngdoc function
  * @name agencyCloudApp.controller:ModelController
@@ -12,7 +14,49 @@ angular
 
   .module( 'agencyCloudApp' )
 
-  .controller( 'ModelController' , function ( $scope , $state , $stateParams , $window , Data , User ) {
+  .controller( 'ModelController' , function ( $scope , $state , $stateParams , $window , Data , User , socket ) {
+
+    socket.on( 'progress:put' , function( request ) {
+
+      var message = JSON.parse( request );
+
+      for( var index = 1; index < $scope.model.image.$$progress.length; index++ ) {
+
+        var progress = $scope.model.image.$$progress[ index ];
+
+        if( progress.label === message.size + 'px' && progress.state < message.status ) {
+
+          progress.state = message.status;
+
+          if( progress.state === 1 ) {
+
+            progress.status = 'Worker server launched. Receiving original image data…';
+
+            progress.percentage = 50;
+
+          }
+
+          if( progress.state === 2 ) {
+
+            progress.status = 'Original image data received. Resizing to ' + progress.label + '…';
+
+            progress.percentage = 75;
+
+          }
+
+          if( progress.state === 3 ) {
+
+            progress.status = 'Image resize completed.';
+
+            progress.percentage = 100;
+
+          }
+
+        }
+
+      }
+
+    });
 
     /* Set the current model once data is recieved */
 
@@ -73,6 +117,122 @@ angular
     $scope.submit = function() {
 
       Data.put( $scope.$parent.data );
+
+      if( $scope.model.image && $scope.model.image.$$file ) {
+
+        $scope.model.image.$$progress = [
+
+          {
+
+            status : 'Uploading original image…',
+
+            label : 'Original',
+
+            percentage : 0,
+
+            state : 0
+
+          } , {
+
+            status : 'Waiting for original image to finish uploading…',
+
+            label : '272px',
+
+            percentage : 0,
+
+            state : 0
+
+          } , {
+
+            status : 'Waiting for original image to finish uploading…',
+
+            label : '750px',
+
+            percentage : 0,
+
+            state : 0
+
+          } , {
+
+            status : 'Waiting for original image to finish uploading…',
+
+            label : '1536px',
+
+            percentage : 0,
+
+            state : 0
+
+          } , {
+
+            status : 'Waiting for original image to finish uploading…',
+
+            label : '2880px',
+
+            percentage : 0,
+
+            state : 0
+
+          }
+
+        ];
+
+        socket.emit( 'aws:credentials:get' , {} , function( credentials ) {
+
+          var today = new Date().toJSON().slice( 0 , 10 ).split( '-' ).join( '' );
+
+          var endpoint = 'https://s3-us-west-2.amazonaws.com/lambdatestbucket/';
+
+          var form = new FormData();
+
+          form.append( 'key' , $scope.model.image.url );
+
+          form.append( 'x-amz-credential' , 'AKIAJD4CVTSTWPYNI4DQ/' + today + '/us-west-2/s3/aws4_request' );
+
+          form.append( 'x-amz-algorithm' , 'AWS4-HMAC-SHA256' );
+
+          form.append( 'x-amz-date' , today + 'T000000Z' );
+
+          form.append( 'policy' , credentials.policy );
+
+          form.append( 'x-amz-signature' , credentials.signature );
+
+          form.append( 'file' , $scope.model.image.$$file );
+
+          var xhr = new XMLHttpRequest();
+
+          xhr.upload.addEventListener( 'progress' , _.throttle( function( event ) {
+
+            $scope.model.image.$$progress[ 0 ].percentage = event.position / ( event.totalSize / 100 );
+
+            $scope.$apply();
+
+          } , 1000 ) , false );
+
+          xhr.onload = function() {
+
+            socket.emit( 'progress:get' , xhr.getResponseHeader( 'ETag' ).slice( 1 , -1 ) );
+
+            $scope.model.image.$$progress[ 0 ].status = 'Original image upload completed.';
+
+            for( var index = 1; index < $scope.model.image.$$progress.length; index++ ) {
+
+              var progress = $scope.model.image.$$progress[ index ];
+
+              progress.status = 'Launching a new server to resize the original image to ' + progress.label + '…';
+
+              progress.percentage = 25;
+
+            }
+
+          };
+
+          xhr.open( 'POST' , endpoint , true );
+
+          xhr.send( form );
+
+        });
+
+      }
 
     };
 

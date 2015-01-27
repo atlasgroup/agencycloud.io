@@ -19,6 +19,12 @@ angular
 
       if( image ) {
 
+        if( size === 'original' ) {
+
+          return 'https://s3-us-west-2.amazonaws.com/original.freedommodels.com/' + image.url;
+
+        }
+
         if( parseInt( size ) === 272 ) {
 
           return 'https://s3-us-west-2.amazonaws.com/twoseventwo.freedommodels.com/' + image.url;

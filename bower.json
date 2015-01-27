@@ -16,7 +16,8 @@
     "angular-ui-router": "~0.2.13",
     "socket.io-client": "~1.3.2",
     "three.js": "*",
-    "underscore": "~1.7.0"
+    "underscore": "~1.7.0",
+    "aws-sdk-js": "~2.1.7"
   },
   "devDependencies": {
     "angular-mocks": "~1.3.0",

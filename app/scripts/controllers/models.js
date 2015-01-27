@@ -12,9 +12,11 @@ angular
 
   .module( 'agencyCloudApp' )
 
-  .controller( 'ModelsController' , function ( $scope , $window , $state , $stateParams , Data , User , socket ) {
+  .controller( 'ModelsController' , function ( $scope , $window , $state , $stateParams , Data , User ) {
 
-    socket.on( 'model:image:sizes:put' , function( image ) {
+    /*socket.on( 'model:image:sizes:put' , function( image ) {
+
+      console.log( image );
 
       for( var index = 0; index < $scope.data.models.length; index++ ) {
 
@@ -23,6 +25,40 @@ angular
           if( $scope.data.models[ index ].image.sizes ) {
 
             $scope.data.models[ index ].image.sizes.push( image.size );
+
+            if( image.size === 272 ) {
+
+              $scope.data.models[ index ].image.$$progress[ 1 ].status = 'Resized image created.';
+
+              $scope.data.models[ index ].image.$$progress[ 1 ].percentage = 100;
+
+            }
+
+            if( image.size === 750 ) {
+
+              $scope.data.models[ index ].image.$$progress[ 2 ].status = 'Resized image created.';
+
+              $scope.data.models[ index ].image.$$progress[ 2 ].percentage = 100;
+
+            }
+
+            if( image.size === 1536 ) {
+
+              $scope.data.models[ index ].image.$$progress[ 3 ].status = 'Resized image created.';
+
+              $scope.data.models[ index ].image.$$progress[ 3 ].percentage = 100;
+
+            }
+
+            if( image.size === 2880 ) {
+
+              $scope.data.models[ index ].image.$$progress[ 4 ].status = 'Resized image created.';
+
+              $scope.data.models[ index ].image.$$progress[ 4 ].percentage = 100;
+
+              console.log( 'DONE' , ( Date.now() - $window.start ) / 1000 );
+
+            }
 
           } else {
 
@@ -34,7 +70,7 @@ angular
 
       }
 
-    });
+    });*/
 
     Data.get().then( function( response ) {
 

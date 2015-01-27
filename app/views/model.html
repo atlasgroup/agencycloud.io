@@ -42,44 +42,6 @@
 
     <div class="panel-body">
 
-      <div class="media form-group">
-
-        <div class="media-left">
-
-          <img class="media-object img-rounded" ng-src="{{ model.image | image : '272' }}" ng-srcset="{{ model.image | image : '272' }} 2x">
-
-        </div>
-
-        <div class="media-body">
-
-          <label class="media-heading">
-
-            Image
-
-          </label>
-
-          <input type="file" class="form-control">
-
-          <p class="help-block">
-
-            <small>
-
-              Available sizes :
-
-              <a ng-href="{{ model.image | image : size }}" ng-repeat="size in model.image.sizes track by $index">
-
-                {{ size }}px
-
-              </a>
-
-            </small>
-
-          </p>
-
-        </div>
-
-      </div>
-
       <div class="form-group">
 
         <label>
@@ -113,6 +75,90 @@
         </label>
 
         <input class="form-control" ng-change="update( model )" ng-model="model.height">
+
+      </div>
+
+      <div class="form-group">
+
+        <label>
+
+          Image
+
+        </label>
+
+        <input type="file" class="form-control" image="model.image" accept="image/jpeg">
+
+      </div>
+
+      <div class="form-group" ng-repeat="progress in model.image.$$progress">
+
+        <label>
+
+          {{ progress.label }}
+
+        </label>
+
+        <div class="progress">
+
+          <div class="progress-bar progress-bar-success progress-bar-striped active" style="width: {{ progress.percentage }}%"></div>
+
+        </div>
+
+        <p class="help-block">
+
+          <small>
+
+            {{ progress.status }}
+
+          </small>
+
+        </p>
+
+      </div>
+
+      <div class="form-group text-center">
+
+        <p class="help-block text-center" ng-if="model.image.sizes.length">
+
+          <small>
+
+            Available sizes :
+
+            <a ng-href="{{ model.image | image : 'original' }}" ng-if="!model.image.$$progress || model.image.$$progress[ 0 ].state === 4">
+
+              Original
+
+            </a>
+
+            <a ng-href="{{ model.image | image : 272 }}" ng-if="!model.image.$$progress || model.image.$$progress[ 1 ].state === 4">
+
+              272px
+
+            </a>
+
+            <a ng-href="{{ model.image | image : 750 }}" ng-if="!model.image.$$progress || model.image.$$progress[ 2 ].state === 4">
+
+              750px
+
+            </a>
+
+            <a ng-href="{{ model.image | image : 1536 }}" ng-if="!model.image.$$progress || model.image.$$progress[ 3 ].state === 4">
+
+              1536px
+
+            </a>
+
+            <a ng-href="{{ model.image | image : 2880 }}" ng-if="!model.image.$$progress || model.image.$$progress[ 4 ].state === 4">
+
+              2880px
+
+            </a>
+
+          </small>
+
+        </p>
+
+        <img class="img-rounded center-block" ng-srcset="{{ model.image | image : '272' }} 2x" ng-src="{{ model.image | image : '272' }}">
 
       </div>
 
